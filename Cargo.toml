@@ -1,0 +1,37 @@
+[package]
+name = "my_api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+captcha = "*"
+tokio = { version = "1", features = ["macros"] }
+serde_json = { version = "1", features = ["raw_value"] }
+# Documentation: https://docs.rs/vercel_runtime/latest/vercel_runtime
+vercel_runtime = { version = "1" }
+sha2 = "0.10.2"
+jsonwebtoken = "9.3.0"
+serde = { version = "1.0", features = ["derive"] }
+chrono = "0.4.38"
+
+# You can specify a library for shared logic here (optional)
+[lib]
+path = "src-rs/lib.rs"
+
+# Each handler has to be specified as [[bin]]
+[[bin]]
+name = "generate"
+path = "api/generate.rs"
+
+[[bin]]
+name = "check"
+path = "api/check.rs"
+
+# Note that you need to provide unique names for each binary:
+# [[bin]]
+# name = "user-id"
+# path = "api/user/[id].rs"
+#
+# [[bin]]
+# name = "group-id"
+# path = "api/group/[id].rs"
