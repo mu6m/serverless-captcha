@@ -35,7 +35,7 @@ pub fn generate_token(code: &str) -> String {
         exp: expiration,
     };
     let enc_key = env::var("JWT_SECRET").unwrap();
-    match encode(&Header::default(), &claims, &EncodingKey::from_secret(enc_key)) {
+    match encode(&Header::default(), &claims, &EncodingKey::from_secret(enc_key.as_bytes())) {
         Ok(token) => token,
         Err(e) => format!("Error generating token: {}", e),
     }
@@ -44,7 +44,7 @@ pub fn generate_token(code: &str) -> String {
 pub fn check_token(token: &str, code: &str) -> bool {
     // Set up decoding key and validation
     let enc_key = env::var("JWT_SECRET").unwrap();
-    let decoding_key = DecodingKey::from_secret(enc_key);
+    let decoding_key = DecodingKey::from_secret(enc_key.as_bytes());
     let validation = Validation::new(Algorithm::HS256);
 
     let mut hasher = Sha256::new();
